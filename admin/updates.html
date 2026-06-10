@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Updates - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 px-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="bi bi-arrow-up-circle-fill text-danger me-2"></i>Updates</h2>
+    <div class="d-flex gap-2">
+      <a href="{{ url_for('admin.create_update') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus me-1"></i>Publish Update</a>
+      <a href="{{ url_for('admin.admin_panel') }}" class="btn btn-outline-secondary btn-sm">&larr; Back</a>
+    </div>
+  </div>
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="bg-light"><tr><th class="px-4 py-3">Title</th><th>Version</th><th>Type</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for u in updates %}
+          <tr>
+            <td class="px-4 py-3 fw-medium">{{ u.title }}</td>
+            <td class="py-3"><span class="badge bg-primary">{{ u.version or 'v1.0' }}</span></td>
+            <td class="py-3"><span class="badge bg-secondary">{{ u.type|title }}</span></td>
+            <td class="py-3"><small>{{ (u.created_at or '')[:10] }}</small></td>
+            <td class="py-3">
+              <form method="POST" action="{{ url_for('admin.delete_update', uid=u.id) }}" onsubmit="return confirm('Delete?')">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-center text-muted py-5">No updates yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

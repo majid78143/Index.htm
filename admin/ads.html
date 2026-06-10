@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Ads Manager - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <h2 class="fw-bold mb-4"><i class="bi bi-badge-ad-fill text-warning me-2"></i>Adsterra Ads Manager</h2>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <form method="POST">
+            <div class="form-check form-switch mb-4">
+              <input class="form-check-input" type="checkbox" name="enabled" id="ads_enabled" {% if ads.enabled %}checked{% endif %} role="switch" style="width:50px;height:25px;">
+              <label class="form-check-label fw-bold ms-2" for="ads_enabled">Enable Ads</label>
+            </div>
+            <hr/>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Banner Ad ID</label>
+              <input type="text" name="banner_id" class="form-control" value="{{ ads.banner_id or '' }}" placeholder="Adsterra banner ID"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Native Ad ID</label>
+              <input type="text" name="native_id" class="form-control" value="{{ ads.native_id or '' }}" placeholder="Adsterra native ad ID"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Social Bar Script URL</label>
+              <input type="text" name="social_bar" class="form-control" value="{{ ads.social_bar or '' }}" placeholder="https://..."/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Smart Link URL</label>
+              <input type="url" name="smart_link" class="form-control" value="{{ ads.smart_link or '' }}" placeholder="https://..."/>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-medium">Popup Script URL</label>
+              <input type="text" name="popup" class="form-control" value="{{ ads.popup or '' }}" placeholder="https://..."/>
+            </div>
+            <div class="row g-3 mb-4">
+              {% for label, name in [('Show Banner','show_banner'),('Show Native','show_native'),('Show Popup','show_popup'),('Show Social Bar','show_social_bar')] %}
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="{{ name }}" {% if ads.get(name) %}checked{% endif %}/>
+                  <label class="form-check-label">{{ label }}</label>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Save Ads Settings</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
