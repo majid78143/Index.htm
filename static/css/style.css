@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════
+   MJ Developer Platform — Global Stylesheet
+   ═══════════════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1a1a2e;
+  background-color: #f8f9fa;
+  line-height: 1.6;
+}
+
+/* ── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a1a1a1; }
+
+/* ── Navbar ─────────────────────────────────────── */
+.navbar {
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  letter-spacing: -.3px;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #444 !important;
+  transition: color .15s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary, #0d6efd) !important;
+}
+
+/* ── Cards ──────────────────────────────────────── */
+.card {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.12) !important;
+}
+
+/* ── Hero Section ───────────────────────────────── */
+.hero-section {
+  min-height: 480px;
+}
+
+/* ── Buttons ─────────────────────────────────────── */
+.btn {
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all .15s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, .3);
+}
+
+/* ── Forms ───────────────────────────────────────── */
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 1.5px solid #e0e0e0;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary, #0d6efd);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, .1);
+}
+
+/* ── Accordion ─────────────────────────────────── */
+.accordion-button:not(.collapsed) {
+  background-color: rgba(13, 110, 253, .05);
+  color: var(--primary, #0d6efd);
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+/* ── Table ───────────────────────────────────────── */
+.table th {
+  font-weight: 600;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #666;
+}
+
+/* ── Badges ──────────────────────────────────────── */
+.badge {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+/* ── Tool Icon ─────────────────────────────────── */
+.tool-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Profile Banner ─────────────────────────────── */
+.profile-banner {
+  background-color: #e9f3ff;
+}
+
+/* ── Footer ──────────────────────────────────────── */
+footer a:hover {
+  color: #fff !important;
+}
+
+/* ── Timeline ────────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 10px;
+}
+
+/* ── Admin / Owner Panel ────────────────────────── */
+.container-fluid {
+  max-width: 1400px;
+}
+
+/* ── Responsive Helpers ─────────────────────────── */
+@media (max-width: 576px) {
+  .hero-section {
+    min-height: auto;
+  }
+  .display-4 {
+    font-size: 2rem;
+  }
+}
+
+/* ── Loading Spinner ─────────────────────────────── */
+.spinner-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  display: none;
+}
+
+/* ── Smooth transitions ──────────────────────────── */
+.fade-in {
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Gradient Text ───────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary, #0d6efd), var(--secondary, #6c757d));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
