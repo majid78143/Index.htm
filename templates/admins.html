@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Admins - Owner Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 px-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="bi bi-shield-fill text-warning me-2"></i>Admin Management</h2>
+    <a href="{{ url_for('owner.owner_panel') }}" class="btn btn-outline-secondary btn-sm">&larr; Back</a>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4">
+      <h5 class="fw-bold mb-3">Add Admin</h5>
+      <form method="POST" action="{{ url_for('owner.add_admin') }}" class="row g-3">
+        <div class="col-md-3"><input type="text" name="uid" class="form-control" placeholder="User UID" required/></div>
+        <div class="col-md-3"><input type="text" name="name" class="form-control" placeholder="Display Name"/></div>
+        <div class="col-md-3">
+          <select name="role" class="form-select">
+            {% for r in roles %}<option value="{{ r }}">{{ r.replace('_',' ')|title }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3"><button type="submit" class="btn btn-warning text-white w-100">Add Admin</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="bg-light"><tr><th class="px-4 py-3">Name</th><th>UID</th><th>Role</th><th>Added</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for a in admins %}
+          <tr>
+            <td class="px-4 py-3 fw-medium">{{ a.name or '—' }}</td>
+            <td><code>{{ a.uid }}</code></td>
+            <td><span class="badge bg-warning text-dark">{{ a.role|replace('_',' ')|title }}</span></td>
+            <td><small class="text-muted">{{ (a.added_at or '')[:10] }}</small></td>
+            <td>
+              <form method="POST" action="{{ url_for('owner.remove_admin', uid=a.uid) }}" class="d-inline" onsubmit="return confirm('Remove?')">
+                <button class="btn btn-sm btn-outline-danger">Remove</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-center text-muted py-5">No admins yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
