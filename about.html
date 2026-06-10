@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}About - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold">About {{ website_name }}</h1>
+        <p class="lead text-muted">Your go-to Free Fire utility platform</p>
+      </div>
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <h4 class="fw-bold mb-3">What We Do</h4>
+        <p class="text-muted">{{ website_name }} is a comprehensive Free Fire utility platform built for players, guild leaders, and communities. We provide fast, reliable tools to look up profiles, search guilds, view rankings, and connect with partner servers.</p>
+      </div>
+      <div class="row g-4 mb-4">
+        {% set features = [
+          ('🎮', 'Free Fire Tools', 'Profile lookups, guild searches, rankings, and more'),
+          ('🏰', 'Guild Network', 'Connect with verified guilds from all regions'),
+          ('🤝', 'Partner Program', 'Featured Discord servers for the community'),
+          ('📢', 'Announcements', 'Stay updated with platform and game news'),
+          ('🤖', 'Discord Bot', 'Manage everything through Discord slash commands'),
+          ('🔒', 'Secure Platform', 'Multiple login options with security logging'),
+        ] %}
+        {% for emoji, title, desc in features %}
+        <div class="col-md-6">
+          <div class="card border-0 bg-light rounded-3 p-4">
+            <div class="fs-3 mb-2">{{ emoji }}</div>
+            <h6 class="fw-bold">{{ title }}</h6>
+            <p class="text-muted small mb-0">{{ desc }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="text-center">
+        <a href="{{ url_for('main.contact') }}" class="btn btn-primary me-2">Contact Us</a>
+        <a href="{{ url_for('tools.tools_index') }}" class="btn btn-outline-primary">Explore Tools</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
