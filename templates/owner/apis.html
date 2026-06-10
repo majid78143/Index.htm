@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}API Management - Owner Panel{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-code-slash text-primary me-2"></i>API Management</h2>
+        <a href="{{ url_for('owner.owner_panel') }}" class="btn btn-outline-secondary btn-sm">&larr; Back</a>
+      </div>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <form method="POST">
+            <div class="mb-3">
+              <label class="form-label fw-medium">Free Fire API Key</label>
+              <input type="text" name="ff_api_key" class="form-control" value="{{ settings.ff_api_key or '' }}" placeholder="API key for Free Fire data"/>
+              <small class="text-muted">Used for profile lookups and guild searches.</small>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-medium">Discord Webhook URL</label>
+              <input type="url" name="discord_webhook" class="form-control" value="{{ settings.discord_webhook or '' }}" placeholder="https://discord.com/api/webhooks/..."/>
+              <small class="text-muted">For admin notifications.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Save API Settings</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

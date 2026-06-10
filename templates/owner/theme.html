@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Theme - Owner Panel{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-palette-fill text-info me-2"></i>Theme Settings</h2>
+        <a href="{{ url_for('owner.owner_panel') }}" class="btn btn-outline-secondary btn-sm">&larr; Back</a>
+      </div>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <form method="POST">
+            <div class="mb-3">
+              <label class="form-label fw-medium">Logo URL</label>
+              <input type="url" name="logo_url" class="form-control" value="{{ settings.logo_url or '' }}" placeholder="https://..."/>
+              {% if settings.logo_url %}<img src="{{ settings.logo_url }}" height="50" class="mt-2 rounded" onerror="this.style.display='none'"/>{% endif %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Favicon URL</label>
+              <input type="url" name="favicon_url" class="form-control" value="{{ settings.favicon_url or '' }}" placeholder="https://..."/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Hero Image URL</label>
+              <input type="url" name="hero_image" class="form-control" value="{{ settings.hero_image or '' }}" placeholder="https://..."/>
+              {% if settings.hero_image %}<img src="{{ settings.hero_image }}" class="mt-2 img-fluid rounded" style="max-height:150px;" onerror="this.style.display='none'"/>{% endif %}
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-medium">Primary Color</label>
+                <div class="d-flex gap-2">
+                  <input type="color" name="primary_color" class="form-control form-control-color" value="{{ settings.primary_color or '#0d6efd' }}"/>
+                  <input type="text" class="form-control" value="{{ settings.primary_color or '#0d6efd' }}" readonly/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-medium">Secondary Color</label>
+                <div class="d-flex gap-2">
+                  <input type="color" name="secondary_color" class="form-control form-control-color" value="{{ settings.secondary_color or '#6c757d' }}"/>
+                  <input type="text" class="form-control" value="{{ settings.secondary_color or '#6c757d' }}" readonly/>
+                </div>
+              </div>
+            </div>
+            <div class="mb-4"><label class="form-label fw-medium">Footer Text</label><input type="text" name="footer_text" class="form-control" value="{{ settings.footer_text or '' }}"/></div>
+            <button type="submit" class="btn btn-primary">Save Theme</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

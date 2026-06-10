@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Analytics - Owner Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 px-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="bi bi-graph-up text-info me-2"></i>Platform Analytics</h2>
+    <a href="{{ url_for('owner.owner_panel') }}" class="btn btn-outline-secondary btn-sm">&larr; Back</a>
+  </div>
+  <div class="row g-4">
+    {% for key, val in analytics.items() %}
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card border-0 shadow-sm rounded-4 text-center">
+        <div class="card-body p-4">
+          <div class="h2 fw-bold text-primary">{{ val }}</div>
+          <div class="text-muted small">{{ key.replace('_', ' ')|title }}</div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center text-muted py-5">No analytics data yet.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
