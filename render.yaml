@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: mj-developer-platform
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 60
+    envVars:
+      - key: TOKEN
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: OWNER_EMAIL
+        sync: false
+      - key: OWNER_PASSWORD
+        sync: false
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: DISCORD_REDIRECT_URI
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        sync: false
+      - key: FIREBASE_DATABASE_URL
+        value: https://web-massaging-589b7-default-rtdb.firebaseio.com
+      - key: FIREBASE_PROJECT_ID
+        value: web-massaging-589b7
+      - key: FIREBASE_STORAGE_BUCKET
+        value: web-massaging-589b7.firebasestorage.app
