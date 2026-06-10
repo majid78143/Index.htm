@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Settings - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <h2 class="fw-bold mb-4">Account Settings</h2>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-3">Profile Information</h5>
+          <form method="POST">
+            <div class="mb-3">
+              <label class="form-label">Display Name</label>
+              <input type="text" name="name" class="form-control" value="{{ user.name or '' }}"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" value="{{ user.email or '' }}" disabled/>
+              <small class="text-muted">Email cannot be changed.</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Login Method</label>
+              <input type="text" class="form-control" value="{{ user.login_method|title or 'Email' }}" disabled/>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 mt-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-3">Linked Accounts</h5>
+          <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded-3 mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-discord text-primary fs-5"></i>
+              <span>Discord</span>
+            </div>
+            {% if user.discord_id %}
+            <span class="badge bg-success">Connected</span>
+            {% else %}
+            <a href="{{ url_for('auth.discord_login') }}" class="btn btn-sm btn-outline-primary">Connect</a>
+            {% endif %}
+          </div>
+          <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded-3">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-google text-danger fs-5"></i>
+              <span>Google</span>
+            </div>
+            {% if user.google_id %}
+            <span class="badge bg-success">Connected</span>
+            {% else %}
+            <a href="{{ url_for('auth.google_login') }}" class="btn btn-sm btn-outline-primary">Connect</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm rounded-4 mt-4 border-danger">
+        <div class="card-body p-4">
+          <h5 class="fw-bold text-danger mb-3">Danger Zone</h5>
+          <p class="text-muted small">Once you delete your account, there is no going back.</p>
+          <button class="btn btn-outline-danger btn-sm" disabled>Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
