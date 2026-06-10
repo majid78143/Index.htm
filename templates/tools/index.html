@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Tools - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Free Fire Tools</h1>
+    <p class="text-muted lead">All the tools you need to dominate Free Fire</p>
+  </div>
+  <div class="row g-4">
+    {% set tools = [
+      ('Profile Lookup', 'bi-person-badge', 'Search any player by UID and get full profile details including avatar, level, guild and stats.', 'tools.profile_lookup', 'primary'),
+      ('Guild Search', 'bi-shield', 'Find guilds by ID. View members, owner, level, verification and creation date.', 'tools.guild_search', 'success'),
+      ('Player Search', 'bi-search', 'Search players by name across all regions. Find friends or rivals quickly.', 'tools.player_search', 'info'),
+      ('Region Checker', 'bi-globe', 'Identify which server region any player UID belongs to.', 'tools.region_checker', 'warning'),
+      ('UID Info', 'bi-info-circle', 'Get complete account information using just a player UID.', 'tools.uid_info', 'secondary'),
+      ('Rankings', 'bi-trophy', 'View top ranked players and guilds across all regions.', 'tools.rankings', 'danger'),
+    ] %}
+    {% for name, icon, desc, route, color in tools %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 shadow-sm h-100 rounded-4">
+        <div class="card-body p-4">
+          <div class="bg-{{ color }} bg-opacity-10 rounded-3 p-3 d-inline-flex mb-3">
+            <i class="bi {{ icon }} text-{{ color }} fs-3"></i>
+          </div>
+          <h5 class="fw-bold">{{ name }}</h5>
+          <p class="text-muted small mb-4">{{ desc }}</p>
+          <a href="{{ url_for(route) }}" class="btn btn-{{ color }} btn-sm px-4">Use Tool</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

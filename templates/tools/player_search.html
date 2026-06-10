@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Player Search - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Player Search</h1>
+    <p class="text-muted">Search players by name</p>
+  </div>
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-6">
+      <form method="POST">
+        <div class="input-group input-group-lg shadow-sm">
+          <input type="text" name="query" class="form-control" placeholder="Enter player name..." value="{{ query }}"/>
+          <select name="region" class="form-select" style="max-width:130px;">
+            {% for code, name in regions.items() %}
+            <option value="{{ code }}" {% if code == region %}selected{% endif %}>{{ code }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if query and not results %}
+  <div class="text-center text-muted py-5">
+    <i class="bi bi-person-x fs-1 opacity-25 d-block mb-3"></i>
+    No players found for "{{ query }}" in {{ region }}.
+  </div>
+  {% elif results %}
+  <div class="row g-3">
+    {% for player in results %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body d-flex align-items-center gap-3 p-3">
+          {% if player.avatar %}
+          <img src="{{ player.avatar }}" width="50" height="50" class="rounded-circle"/>
+          {% else %}
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width:50px;height:50px;">
+            <i class="bi bi-person-fill text-white"></i>
+          </div>
+          {% endif %}
+          <div>
+            <div class="fw-bold">{{ player.nickname }}</div>
+            <small class="text-muted">UID: {{ player.uid }} &bull; Lv {{ player.level }}</small>
+          </div>
+          <a href="{{ url_for('tools.profile_lookup') }}?uid={{ player.uid }}&region={{ region }}" class="btn btn-sm btn-outline-primary ms-auto">View</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

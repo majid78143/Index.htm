@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}UID Info - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">UID Info</h1>
+    <p class="text-muted">Get complete account information using a player UID</p>
+  </div>
+  <div class="row justify-content-center mb-4">
+    <div class="col-lg-5">
+      <form method="POST">
+        <div class="input-group input-group-lg shadow-sm">
+          <input type="text" name="uid" class="form-control" placeholder="Enter UID..." value="{{ uid }}" required/>
+          <button type="submit" class="btn btn-secondary px-4"><i class="bi bi-info-circle me-1"></i>Get Info</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% if result %}
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-3">Player Info — UID {{ uid }}</h5>
+          <table class="table table-borderless">
+            <tbody>
+              {% for key, val in result.items() if key != 'is_mock' %}
+              <tr>
+                <td class="text-muted" style="width:40%;">{{ key.replace('_', ' ')|title }}</td>
+                <td class="fw-medium">{{ val or '—' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
