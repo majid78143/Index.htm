@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Guilds - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Guild Directory</h1>
+    <p class="text-muted">Browse and find guilds from all regions</p>
+  </div>
+
+  <div class="text-center mb-5">
+    <a href="{{ url_for('tools.guild_search') }}" class="btn btn-primary btn-lg px-5">
+      <i class="bi bi-search me-2"></i>Search by Guild ID
+    </a>
+  </div>
+
+  {% if guilds %}
+  <div class="row g-4">
+    {% for g in guilds %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="bg-success bg-opacity-10 rounded-circle p-3">
+              <i class="bi bi-shield-fill text-success fs-5"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0">{{ g.guild_name or g.name or 'Unknown' }}</h6>
+              <small class="text-muted">{{ g.region or 'Unknown Region' }}</small>
+            </div>
+          </div>
+          {% if g.owner %}<p class="text-muted small mb-1"><i class="bi bi-person-fill me-1"></i>{{ g.owner }}</p>{% endif %}
+          {% if g.members %}<p class="text-muted small mb-3"><i class="bi bi-people-fill me-1"></i>{{ g.members }} members</p>{% endif %}
+          {% if g.guild_id or g.id %}
+          <a href="{{ url_for('tools.guild_search') }}?guild_id={{ g.guild_id or g.id }}&region={{ g.region or 'IND' }}" class="btn btn-sm btn-outline-success">View Details</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center text-muted py-5">
+    <i class="bi bi-shield fs-1 opacity-25 d-block mb-3"></i>
+    <p>No guilds in directory yet. Use the Guild Search tool to look up any guild.</p>
+    <a href="{{ url_for('tools.guild_search') }}" class="btn btn-outline-success">Search Guilds</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

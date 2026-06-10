@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="fw-bold mb-4">Privacy Policy</h1>
+      {% if page.content %}
+        {{ page.content|safe }}
+      {% else %}
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h5 class="fw-bold">Information We Collect</h5>
+        <p class="text-muted">We collect information you provide during account creation (name, email), login data from OAuth providers (Discord, Google), and usage analytics.</p>
+        <h5 class="fw-bold">How We Use It</h5>
+        <p class="text-muted">Your information is used to provide platform features, authenticate your identity, and improve the service.</p>
+        <h5 class="fw-bold">Firebase Storage</h5>
+        <p class="text-muted">All data is stored securely in Firebase Realtime Database and Firebase Storage.</p>
+        <h5 class="fw-bold">Third-Party Services</h5>
+        <p class="text-muted">We use Discord OAuth and Google OAuth for authentication. These services have their own privacy policies.</p>
+        <h5 class="fw-bold">Contact</h5>
+        <p class="text-muted mb-0">For privacy concerns, contact us through our <a href="{{ url_for('main.contact') }}">contact page</a>.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

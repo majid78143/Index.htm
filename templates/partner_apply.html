@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Partner Application - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="text-center mb-5">
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-4 mb-3">
+          <i class="bi bi-handshake text-primary fs-1"></i>
+        </div>
+        <h1 class="fw-bold">Partner Application</h1>
+        <p class="text-muted">Apply to feature your Discord server as a partner</p>
+      </div>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <form method="POST">
+            <div class="mb-3">
+              <label class="form-label fw-medium">Server Name</label>
+              <input type="text" name="server_name" class="form-control" placeholder="Your Discord Server Name" required/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Server Invite Link</label>
+              <input type="url" name="server_invite" class="form-control" placeholder="https://discord.gg/..." required/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium">Your Discord ID</label>
+              <input type="text" name="owner_discord_id" class="form-control" placeholder="e.g. 123456789012345678" required/>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-medium">Description</label>
+              <textarea name="description" class="form-control" rows="4" placeholder="Describe your server..." required></textarea>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

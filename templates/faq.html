@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}FAQ - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Frequently Asked Questions</h1>
+    <p class="text-muted">Everything you need to know about {{ website_name }}</p>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-lg-6">
+      <form method="GET">
+        <div class="input-group shadow-sm">
+          <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+          <input type="text" name="q" class="form-control border-start-0" placeholder="Search FAQ..." value="{{ query }}"/>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      {% if faq %}
+      <div class="accordion" id="faqAccordion">
+        {% for f in faq %}
+        <div class="accordion-item border mb-2 rounded-3 overflow-hidden">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ loop.index }}">
+              <i class="bi bi-question-circle text-primary me-2"></i>{{ f.question }}
+            </button>
+          </h2>
+          <div id="faq{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-muted">{{ f.answer }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-center text-muted py-5">
+        <i class="bi bi-question-circle fs-1 opacity-25 d-block mb-3"></i>
+        {% if query %}No results for "{{ query }}".{% else %}No FAQ items available yet.{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

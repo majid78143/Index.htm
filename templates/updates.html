@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Updates - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Updates & Changelog</h1>
+    <p class="text-muted">Version history and feature releases</p>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      {% if updates %}
+      <div class="timeline">
+        {% for u in updates %}
+        <div class="d-flex gap-4 mb-4">
+          <div class="d-flex flex-column align-items-center">
+            <div class="bg-primary rounded-circle" style="width:14px;height:14px;min-width:14px;margin-top:5px;"></div>
+            {% if not loop.last %}<div class="flex-grow-1 bg-light" style="width:2px;"></div>{% endif %}
+          </div>
+          <div class="card border-0 shadow-sm rounded-4 flex-grow-1 mb-2">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                {% if u.version %}<span class="badge bg-primary">{{ u.version }}</span>{% endif %}
+                <span class="badge bg-{{ 'info' if u.type == 'website' else 'success' if u.type == 'bot' else 'warning' if u.type == 'feature' else 'secondary' }}">{{ u.type|title }}</span>
+                <small class="text-muted ms-auto">{{ (u.created_at or '')[:10] }}</small>
+              </div>
+              <h5 class="fw-bold mb-2">{{ u.title }}</h5>
+              {% if u.content %}<p class="text-muted mb-0">{{ u.content }}</p>{% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-center text-muted py-5">
+        <i class="bi bi-arrow-up-circle fs-1 opacity-25 d-block mb-3"></i>No updates published yet.
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

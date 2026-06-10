@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block title %}{{ website_name }} - Free Fire Utility Platform{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9f3ff 100%);">
+  <div class="container py-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 mb-3 rounded-pill">Free Fire Utility Platform</span>
+        <h1 class="display-4 fw-bold mb-3">The Ultimate <span class="text-primary">Free Fire</span> Tool Platform</h1>
+        <p class="lead text-muted mb-4">Look up player profiles, search guilds, check rankings, and much more. All the tools you need in one place.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="{{ url_for('tools.profile_lookup') }}" class="btn btn-primary btn-lg px-4"><i class="bi bi-person-badge me-2"></i>Profile Lookup</a>
+          <a href="{{ url_for('tools.guild_search') }}" class="btn btn-outline-primary btn-lg px-4"><i class="bi bi-shield me-2"></i>Guild Search</a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        {% if site.hero_image %}
+        <img src="{{ site.hero_image }}" class="img-fluid rounded-4 shadow-lg" alt="Hero"/>
+        {% else %}
+        <div class="hero-graphic p-5">
+          <i class="bi bi-controller text-primary" style="font-size: 8rem; opacity: 0.15;"></i>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="py-4 bg-white border-top border-bottom">
+  <div class="container">
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3">
+        <div class="p-3">
+          <div class="h2 fw-bold text-primary mb-0">{{ analytics.total_users or '0' }}</div>
+          <div class="text-muted small">Total Users</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="p-3">
+          <div class="h2 fw-bold text-primary mb-0">{{ analytics.total_searches or '0' }}</div>
+          <div class="text-muted small">Total Searches</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="p-3">
+          <div class="h2 fw-bold text-primary mb-0">{{ analytics.total_guild_searches or '0' }}</div>
+          <div class="text-muted small">Guild Searches</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="p-3">
+          <div class="h2 fw-bold text-primary mb-0">{{ partners|length or '0' }}</div>
+          <div class="text-muted small">Partner Servers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Tools -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Popular Tools</h2>
+      <p class="text-muted">Everything you need to track your Free Fire journey</p>
+    </div>
+    <div class="row g-4">
+      {% set tools = [
+        ('Profile Lookup', 'bi-person-badge', 'Look up any player profile', 'tools.profile_lookup'),
+        ('Guild Search', 'bi-shield', 'Search and explore guilds', 'tools.guild_search'),
+        ('Player Search', 'bi-search', 'Find players by name', 'tools.player_search'),
+        ('Region Checker', 'bi-globe', 'Identify player region', 'tools.region_checker'),
+        ('UID Info', 'bi-info-circle', 'Get details from UID', 'tools.uid_info'),
+        ('Rankings', 'bi-trophy', 'Top players and guilds', 'tools.rankings'),
+      ] %}
+      {% for name, icon, desc, route in tools %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 tool-card">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="tool-icon bg-primary bg-opacity-10 rounded-3 p-3">
+                <i class="bi {{ icon }} text-primary fs-4"></i>
+              </div>
+              <h5 class="fw-bold mb-0">{{ name }}</h5>
+            </div>
+            <p class="text-muted small mb-3">{{ desc }}</p>
+            <a href="{{ url_for(route) }}" class="btn btn-sm btn-outline-primary">Use Tool &rarr;</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Latest Announcements -->
+{% if announcements %}
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold mb-0">Latest Announcements</h2>
+      <a href="{{ url_for('main.announcements') }}" class="btn btn-outline-primary btn-sm">View All</a>
+    </div>
+    <div class="row g-4">
+      {% for a in announcements %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            {% if a.pinned %}<span class="badge bg-warning text-dark mb-2"><i class="bi bi-pin-fill me-1"></i>Pinned</span>{% endif %}
+            <span class="badge bg-{{ 'danger' if a.type == 'important' else 'info' }} mb-2">{{ a.type|title or 'Info' }}</span>
+            <h6 class="fw-bold">{{ a.title }}</h6>
+            <p class="text-muted small">{{ a.content[:120] }}{% if a.content|length > 120 %}...{% endif %}</p>
+            <small class="text-muted"><i class="bi bi-clock me-1"></i>{{ a.created_at[:10] if a.created_at else '' }}</small>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Featured Partners -->
+{% if partners %}
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold mb-0">Featured Partners</h2>
+      <a href="{{ url_for('main.partners') }}" class="btn btn-outline-primary btn-sm">View All</a>
+    </div>
+    <div class="row g-4">
+      {% for p in partners %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                <i class="bi bi-discord text-primary fs-5"></i>
+              </div>
+              <h6 class="fw-bold mb-0">{{ p.server_name }}</h6>
+            </div>
+            <p class="text-muted small mb-3">{{ p.description[:100] if p.description else 'Partner server' }}{% if p.description and p.description|length > 100 %}...{% endif %}</p>
+            <a href="{{ p.server_invite }}" target="_blank" class="btn btn-sm btn-primary"><i class="bi bi-discord me-1"></i>Join Server</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Recent Updates -->
+{% if updates %}
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold mb-0">Recent Updates</h2>
+      <a href="{{ url_for('main.updates') }}" class="btn btn-outline-primary btn-sm">View All</a>
+    </div>
+    <div class="row g-3">
+      {% for u in updates %}
+      <div class="col-12">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body p-3 d-flex align-items-center gap-3">
+            <span class="badge bg-primary">{{ u.version or 'v1.0' }}</span>
+            <span class="badge bg-secondary">{{ u.type|title or 'Website' }}</span>
+            <span class="fw-medium">{{ u.title }}</span>
+            <span class="text-muted small ms-auto">{{ u.created_at[:10] if u.created_at else '' }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- FAQ Preview -->
+{% if faq %}
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold">Frequently Asked Questions</h2>
+          <p class="text-muted">Got questions? We have answers.</p>
+        </div>
+        <div class="accordion" id="faqAccordion">
+          {% for f in faq %}
+          <div class="accordion-item border mb-2 rounded">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ loop.index }}">
+                {{ f.question }}
+              </button>
+            </h2>
+            <div id="faq{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">{{ f.answer }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+          <a href="{{ url_for('main.faq') }}" class="btn btn-outline-primary">View All FAQs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="py-5 text-white" style="background: linear-gradient(135deg, {{ primary_color }}, {{ secondary_color }});">
+  <div class="container text-center py-3">
+    <h2 class="fw-bold mb-3">Ready to get started?</h2>
+    <p class="lead mb-4 opacity-75">Join thousands of Free Fire players using our platform</p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg px-4">Create Account</a>
+      <a href="{{ url_for('tools.tools_index') }}" class="btn btn-outline-light btn-lg px-4">Explore Tools</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

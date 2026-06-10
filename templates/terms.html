@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Terms of Service - {{ website_name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="fw-bold mb-4">Terms of Service</h1>
+      {% if page.content %}
+        {{ page.content|safe }}
+      {% else %}
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h5 class="fw-bold">Acceptance of Terms</h5>
+        <p class="text-muted">By using {{ website_name }}, you agree to these terms of service.</p>
+        <h5 class="fw-bold">Use of Service</h5>
+        <p class="text-muted">You may use our platform for lawful purposes only. You may not use it to harass, harm, or misrepresent others.</p>
+        <h5 class="fw-bold">Account Responsibility</h5>
+        <p class="text-muted">You are responsible for maintaining the security of your account and all activities that occur under it.</p>
+        <h5 class="fw-bold">Intellectual Property</h5>
+        <p class="text-muted">Free Fire is a registered trademark of Garena. This platform is not affiliated with Garena.</p>
+        <h5 class="fw-bold">Termination</h5>
+        <p class="text-muted">We reserve the right to suspend or terminate accounts that violate these terms.</p>
+        <h5 class="fw-bold">Changes</h5>
+        <p class="text-muted mb-0">We may update these terms at any time. Continued use constitutes acceptance.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
